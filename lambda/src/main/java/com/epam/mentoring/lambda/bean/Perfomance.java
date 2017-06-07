@@ -2,14 +2,14 @@ package com.epam.mentoring.lambda.bean;
 
 import java.util.Date;
 
-public class Perfomance extends AbstractVersionBean {
+public class Perfomance extends AbstractBean {
 
 	private long perfomanceID;
 	private Show show;
 	private Theatre theatre;
 	private Date startTime;
 	private Date endTime;
-	
+
 	@Override
 	public long getID() {
 		return getPerfomanceID();
