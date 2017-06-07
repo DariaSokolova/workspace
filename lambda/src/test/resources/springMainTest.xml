@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+   	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-4.3.xsd
+  	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+	http://www.springframework.org/schema/util
+	http://www.springframework.org/schema/util/spring-util-4.3.xsd
+	http://www.springframework.org/schema/jdbc 
+	http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+	http://cxf.apache.org/jaxws
+    http://cxf.apache.org/schemas/jaxws.xsd
+   ">
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:test.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configurationClass">
+			<value>org.hibernate.cfg.Configuration</value>
+		</property>
+
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${jdbc.dialect}</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.jdbc.batch_size">100</prop>
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+				<prop key="hibernate.cache.use_second_level_cache">true</prop>
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+				<prop key="hibernate.cache.use_structured_entries">true</prop>
+				<prop key="hibernate.generate_statistics">true</prop>
+			</props>
+		</property>
+
+		<property name="mappingResources">
+			<list>
+				<value>Theatre.hbm.xml</value>
+				<value>Show.hbm.xml</value>
+				<value>Perfomance.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="perfomanceDAO" class="com.epam.mentoring.lambda.dao.PerfomanceDefaultDAO" />
+	<bean id="theatreDAO" class="com.epam.mentoring.lambda.dao.TheatreDefaultDAO" />
+	<bean id="showDAO" class="com.epam.mentoring.lambda.dao.ShowDefaultDAO" />
+
+	<bean id="perfomanceManager" class="com.epam.mentoring.lambda.manager.PerfomanceDefaultManager" />
+	<bean id="theatreManager" class="com.epam.mentoring.lambda.manager.TheatreDefaultManager" />
+	<bean id="showManager" class="com.epam.mentoring.lambda.manager.ShowDefaultManager" />
+
+	<bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource"
+		destroy-method="close">
+		<property name="URL" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="connectionCacheProperties">
+			<props merge="default">
+				<prop key="MinLimit">3</prop>
+				<prop key="MaxLimit">10</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="dbUnitDatabaseConfig" class="com.github.springtestdbunit.bean.DatabaseConfigBean">
+		<property name="skipOracleRecyclebinTables" value="true" />
+		<property name="qualifiedTableNames" value="true" />
+	</bean>
+	<bean id="dbUnitDatabaseConnection"
+		class="com.github.springtestdbunit.bean.DatabaseDataSourceConnectionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="databaseConfig" ref="dbUnitDatabaseConfig" />
+		<property name="schema" value="MENTORING" />
+	</bean>
+
+</beans>

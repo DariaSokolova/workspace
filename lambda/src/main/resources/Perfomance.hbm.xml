@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.epam.mentoring.lambda.bean.Perfomance"
+		batch-size="100" table="DB_PERFOMANCE">
+		<id name="perfomanceID" type="long">
+			<column name="perfomance_id" />
+			<generator class="hilo" />
+		</id>
+		<property name="startTime" type="java.util.Date">
+			<column name="start_time" not-null="true" />
+		</property>
+		<property name="endTime" type="java.util.Date">
+			<column name="end_time" not-null="true" />
+		</property>
+		<many-to-one name="show"
+			class="com.epam.mentoring.lambda.bean.Show" fetch="join" cascade="all">
+			<column name="show_id" not-null="true" />
+		</many-to-one>
+		<many-to-one name="theatre"
+			class="com.epam.mentoring.lambda.bean.Theatre" fetch="join"  cascade="all">
+			<column name="theatre_id" not-null="true" />
+		</many-to-one>
+	</class>
+</hibernate-mapping>
