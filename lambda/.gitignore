@@ -1,0 +1,11 @@
+target
+.settings
+.project
+.classpath
+*.iml
+.idea
+/.gradle/
+build
+gradle
+gradlew.bat
+gradlew
