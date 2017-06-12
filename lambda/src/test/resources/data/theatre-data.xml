@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<MENTORING.DB_THEATRE THEATRE_ID="1" TITLE="Apollo Victoria" SUMMARY="Wicked"/>
+	<MENTORING.DB_THEATRE THEATRE_ID="2" TITLE="Prince of Wales" SUMMARY="The Book Of Mormon"/>
+	<MENTORING.DB_THEATRE THEATRE_ID="3" TITLE="Wyndhams" SUMMARY="Don Juan in Soho"/>
+</dataset>

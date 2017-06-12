@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.epam.mentoring.lambda.bean.Show"
+		batch-size="10" table="DB_SHOW">
+		<id name="showID" type="long">
+			<column name="show_id" />
+			<generator class="native" />
+		</id>
+		<property name="title" type="string">
+			<column name="title" not-null="true" />
+		</property>
+		<property name="summary" type="string">
+			<column name="summary" not-null="true" />
+		</property>
+		<set name="perfomances" table="DB_PERFOMANCE" inverse="true" cascade="all"
+			lazy="false" fetch="subselect">
+			<key>
+				<column name="show_id" not-null="true" />
+			</key>
+			<one-to-many class="com.epam.mentoring.lambda.bean.Perfomance" />
+		</set>
+	</class>
+</hibernate-mapping>
