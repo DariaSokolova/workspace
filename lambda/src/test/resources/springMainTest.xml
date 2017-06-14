@@ -74,6 +74,16 @@
 	<bean id="perfomanceManager" class="com.epam.mentoring.lambda.manager.PerfomanceDefaultManager" />
 	<bean id="theatreManager" class="com.epam.mentoring.lambda.manager.TheatreDefaultManager" />
 	<bean id="showManager" class="com.epam.mentoring.lambda.manager.ShowDefaultManager" />
+	
+	<bean id="scheduler" class="com.epam.mentoring.lambda.scheduler.DefaultTaskScheduler">
+	 	<constructor-arg type = "int" value = "5"/>
+	</bean>
+	<bean id="lockManager" class="com.epam.mentoring.lambda.scheduler.lock.DefaultLockManager" />
+	
+	<bean id="perfomanceStartTimesUpdaterTask" class="com.epam.mentoring.lambda.scheduler.PerfomanceStartTimesUpdaterTask" />
+	<bean id="perfomanceEndTimeUpdaterTask" class="com.epam.mentoring.lambda.scheduler.PerfomanceEndTimeUpdaterTask" />
+	<bean id="loggerTask" class="com.epam.mentoring.lambda.scheduler.LoggerTask" />
+	
 
 	<bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource"
 		destroy-method="close">
