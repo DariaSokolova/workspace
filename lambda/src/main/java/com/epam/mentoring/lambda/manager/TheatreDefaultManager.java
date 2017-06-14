@@ -32,15 +32,10 @@ public class TheatreDefaultManager implements TheatreManager {
 		BiConsumer<Long, String> consumer = (k, v) -> {
 			Theatre theatre = dao.get(k);
 			
-			synchronized (theatre) {
-				
-			}
 			theatre.setTitle(v);
 			dao.save(theatre);
 		};
 
 		map.forEach(consumer);
 	}
-	
-//	public void updateTitle(String)
 }
